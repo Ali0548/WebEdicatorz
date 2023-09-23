@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express()
 app.use(express.json())
+const dbConnection = require('./db');
+dbConnection();
 app.get('/get/user', (req,res)=>{
     const person = {
         userName:"name",
