@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table</title>
+    <style>
+        /* Style the table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+/* Style the table header */
+thead {
+  background-color: #f2f2f2;
+}
+
+th {
+  padding: 10px;
+  text-align: left;
+}
+
+/* Style the table body */
+tbody {
+  background-color: #ffffff;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Style alternate rows for better readability */
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover effect on rows */
+tbody tr:hover {
+  background-color: #e0e0e0;
+}
+
+/* Style the first column (Name) with a bold font */
+td:first-child {
+  font-weight: bold;
+}
+
+/* Style the Email column with a link-like color */
+td:nth-child(2) {
+  color: #0077cc;
+  text-decoration: underline;
+}
+
+/* Hide the Password column (for demonstration purposes) */
+td:nth-child(3) {
+  display: none;
+}
+
+    </style>
+  </head>
+  <body>
+    <label for="">Enter Your Name</label>
+    <input id="nameInput" type="text" name=""/>
+    <br /><br />
+    <label for="">Enter Your Email</label>
+    <input id="emailInput" type="text" name=""  />
+    <br /><br />
+    <label for="">Enter Your Password</label>
+    <input id="passwordInput" type="text" name="" />
+    <br /><br />
+    <button onclick="createDataInTables()" type="button">Enter Data</button>
+
+
+    <br /><br />
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Password</th>
+      </thead>
+      <tbody id="enterData">
+      
+      </tbody>
+    </table>
+  </body>
+  <script src="./script.js"></script>
+</html>

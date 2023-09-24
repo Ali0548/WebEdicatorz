@@ -41,12 +41,12 @@ app.post('/user/add', async (req,res)=>{
   }
    
 })
-app.get('/user/get/all', async (req,res)=>{
+app.get('/user/get/all', async  (req,res)=>{
   try {
-    const allUsers = await user.find()
+    let allUsers = await user.find()
     return res.json({msg:"Data fetched successfully", data:allUsers});
   } catch (error) {
-    return res.json({msg:"Something Went Wrong"});
+    return res.json({msg:"Something Went Wrong", error:error.message});
   }
    
 })
@@ -99,5 +99,35 @@ app.delete('/delete/user', (req,res)=>{
     }
     return res.json({msg:"Sorry incorrect password"});
 })
+
+
+app.put('/user/edit/:id', async (req,res)=>{
+   try {
+   const userId = req.params.id;
+   const requiredUser = await user.findById(userId);
+   if(!requiredUser){
+      return res.json({msg:"User not found", status:requiredUser})
+   }
+   requiredUser.email = "ali0548@gmail.com";
+   requiredUser.password = "ali@786123";
+   await requiredUser.save()
+   return res.json({msg:"Data updated Successfully"})
+   } catch (error) {
+     return res.json({msg:"Something Went Wrong", status:false, error:error})
+   }
+});
+app.delete('/user/delete/:id', async (req,res)=>{
+   try {
+   const userId = req.params.id;
+    await user.findByIdAndDelete(userId)
+   return res.json({msg:"Data deleted Successfully"})
+   } catch (error) {
+     return res.json({msg:"Something Went Wrong", status:false, error:error})
+   }
+});
+
+
+
+
 
 app.listen(5000, ()=>{console.log("Server is created successfully on you computer PORT:5000")})
