@@ -1,11 +1,24 @@
-import React from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 
-const AddUser = () => {
+const AddUser = (props) => {
+    const emailValue = useRef();
+   const [name, setName] = useState("ali");
+   let name2 = "Mohsin";
+   
+   const changeName = ()=>{
+    setName("Ahmad")
+    name2 = "Adeel"
+    alert(emailValue.current.value)
+   }
+   useEffect(()=>{
+    setName("Ahmad");
+   }, [])
+ 
   return (
     <>
        <div className="container">
         <div className="row">
-            <div className="card my-3">
+            <div style={{color:'red',backgroundColor:'grey'}} className="card my-3">
                 <div className="card-header">
                     <h3 className="card-title">Enter Your Information</h3>
                 </div>
@@ -16,7 +29,7 @@ const AddUser = () => {
                     </div>
                     <div className="form-group">
                         <label for="">Enter Your Email</label>
-                        <input id="email" type="email" name="" className="form-control" />
+                        <input ref={emailValue} id="email" type="email" name="" className="form-control" />
                     </div>
                     <div className="form-group">
                         <label for="">Enter Your Password</label>
@@ -25,28 +38,10 @@ const AddUser = () => {
 
                 </div>
                 <div className="card-footer">
-                    <button type="button" onclick="getData()" className="btn btn-success">Submit</button>
+                    <button type="button" onClick={changeName} className="btn btn-success">Submit {name}, {name2}</button>
                 </div>
             </div>
-            <div className="card my-3">
-                <div className="card-header">
-                    <h3 className="card-title">Your Information</h3>
-                </div>
-                <table className="table">
-                    <thead>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Password</th>
-                    </thead>
-                    <tbody id="insertData"> 
-                        <tr>
-                            <td>Ali </td>
-                            <td>Ali@gmail.com</td>
-                            <td>123</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+          
         </div>
       </div>
     </>

@@ -1,0 +1,44 @@
+/* .rajput{
+    color: red;
+ }
+ .rana{
+    color: skyblue;
+ }
+ .sheik{
+    color: lightgreen;
+ }
+ #rana123{
+    color: chartreuse;
+ } */
+
+ h2{
+   border-top-style: dotted;
+   border-bottom-style: dotted;
+   border-left-style: double;
+   border-left-width: 10px;
+   border-left-color: silver;
+ }
+
+ p{
+   border-style: solid;
+   border-width: 5px;
+   border-color: gold;
+   border-radius: 10px;
+   padding: 15px;
+ }
+
+ body{
+   background-image: url(images.jpeg);
+   background-repeat: no-repeat;
+   background-attachment:fixed ;
+   background-position: center;
+   background-size: cover;
+ }
+
+ #box {
+   border: 5px solid;
+   width: 250px;
+   height: 250px;
+   font-size: 18px;
+   background: skyblue;
+ }
