@@ -1,6 +1,27 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 const ViewUser = () => {
+  const [userData, setUserData] = useState([])
+  const fetchUsers = async ()=>{
+    try {
+      const submitData = await fetch("http://localhost:5000/user/get/all", {
+        method:"GET",
+        headers:{
+            "Content-Type":"application/json"
+        },
+    });
+    const users = await submitData.json();
+    console.log(users)
+    setUserData(users.data)
+    } catch (error) {
+      alert('Something Went Wrong')
+    }
+
+   
+  }
+  useEffect(()=>{
+    fetchUsers()
+  }, [])
   return (
     <>
       <div className='container'>
@@ -15,11 +36,13 @@ const ViewUser = () => {
                         <th>Password</th>
                     </thead>
                     <tbody id="insertData"> 
-                        <tr>
-                            <td>Ali </td>
-                            <td>Ali@gmail.com</td>
-                            <td>123</td>
-                        </tr>
+                        {userData.map(user=>{
+                          return (<tr>
+                              <td>{user.name}</td>
+                              <td>{user.email}</td>
+                              <td>{user.password}</td>
+                          </tr>)
+                        })}
                     </tbody>
                 </table>
             </div>

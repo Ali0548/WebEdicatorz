@@ -3,6 +3,8 @@ const app = express()
 app.use(express.json())
 const connectToMongoDB = require('./config');
 const user = require('./model/user')
+const cors = require('cors');
+app.use(cors({origin:"*"}));
 connectToMongoDB();
 app.get('/get/user', (req,res)=>{
     const person = {
@@ -35,9 +37,9 @@ app.post('/user/add', async (req,res)=>{
   try {
     const myDataToAdd = req.body
     const myNewData = await user.create(myDataToAdd)
-    if(myNewData){return res.json({msg:"Data added successfully", data:myNewData});}
+    if(myNewData){return res.json({msg:"Data added successfully", data:myNewData, status:true});}
   } catch (error) {
-    return res.json({msg:"Something Went Wrong"});
+    return res.json({msg:"Something Went Wrong", status:false});
   }
    
 })

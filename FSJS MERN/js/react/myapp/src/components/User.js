@@ -5,10 +5,11 @@ import ViewUser from './ViewUser';
 
  const User = () => {
     const name = "Ali";
+    const myClass = "BSIT";
   return (
     <>
-     <AddUser myName={name}/>
-     <ViewUser myName={name}/>
+     <AddUser myName={name} classOfmine={myClass}/>
+     <ViewUser myName={name} />
     </>
   )
 }
