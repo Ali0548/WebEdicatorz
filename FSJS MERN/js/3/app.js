@@ -6,6 +6,7 @@ const user = require('./model/user')
 const cors = require('cors');
 app.use(cors({origin:"*"}));
 connectToMongoDB();
+const {body, validationResult} = require('express-validator');
 app.get('/get/user', (req,res)=>{
     const person = {
         userName:"name",
@@ -19,13 +20,15 @@ app.get('/get/user', (req,res)=>{
     console.log(newData)
     res.json(person)
 });
+
 function verifyLogin(userPassword){
     let password = "12344321"
-    if(userPassword ===password){
+    if(userPassword === password){
         return true;
     }
     return false;
 }
+const login = true;
 app.post('/login/user', (req,res)=>{
     console.log(req.body)
     if(verifyLogin(req.body.password)){
@@ -33,16 +36,35 @@ app.post('/login/user', (req,res)=>{
     }
     return res.json({msg:"Sorry incorrect password"});
 })
-app.post('/user/add', async (req,res)=>{
+app.post('/user/add', 
+(req,res,next)=>{
+  if(!login){
+   return res.json({status:false, msg:"Un-Authentocated", });
+  }
+  next()
+},
+
+[
+  body("name").notEmpty().withMessage("Name is required"),
+  body("email").notEmpty().withMessage("Email is required").isEmail().withMessage("Email is invalid"),
+  body("password").notEmpty().withMessage("Passowrd is required"),
+]
+,async (req,res)=>{
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ status: false, msg: "Invalid Inputs, Please make sure you are filling every feild", data: errors.array() });
+    }
     const myDataToAdd = req.body
-    const myNewData = await user.create(myDataToAdd)
+    const myNewData = await user.create(myDataToAdd);
     if(myNewData){return res.json({msg:"Data added successfully", data:myNewData, status:true});}
   } catch (error) {
-    return res.json({msg:"Something Went Wrong", status:false});
+    return res.json({msg:"Something Went Wrong", status:false , data:error.message});
   }
    
-})
+}
+
+)
 app.get('/user/get/all', async  (req,res)=>{
   try {
     let allUsers = await user.find()
