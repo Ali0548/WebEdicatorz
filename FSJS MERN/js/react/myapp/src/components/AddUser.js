@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Swal from 'sweetalert2';
+import Navbar from './Navbar';
+import LoadingBar from 'react-top-loading-bar'
 
 const AddUser = (props) => {
+    const [progress, setProgress] = useState(0)
     console.log(props.myName)
     console.log(props.classOfmine)
     const emailValue = useRef();
@@ -27,45 +30,49 @@ const AddUser = (props) => {
         const { name, value } = e.target;
         setUserData({ ...userData, [name]: value })
     }
-    const submitMyData = async (data)=>{
-      try {
-        const submitData = await fetch("http://localhost:5000/user/add", {
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(data)
-        });
-        const result = await submitData.json();
-        if(result.status){ 
-            Swal.fire({
-                position: 'top-mid',
-                icon: 'success',
-                title: 'User is added successfully',
-                showConfirmButton: false,
-                timer: 1500
-              })
-        } else {
+    const submitMyData = async (data) => {
+        try {
+            setProgress(30)
+            const submitData = await fetch("http://localhost:5000/user/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            setProgress(60)
+            const result = await submitData.json();
+            setProgress(100)
+            if (result.status) {
+                 
+                Swal.fire({
+                    position: 'top-mid',
+                    icon: 'success',
+                    title: 'User is added successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }
+            console.log(result)
+        } catch (error) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Something went wrong!',
-              })
+            })
+            alert("Something Went Wrong")
+            console.log(error.message)
         }
-        console.log(result)
-      } catch (error) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          })
-        alert("Something Went Wrong")
-        console.log(error.message)
-      }
     }
     const handleSubmit = async (e) => {
-      e.preventDefault();
-      await submitMyData(userData)
+        e.preventDefault();
+        await submitMyData(userData)
     }
     useEffect(() => {
         setName("Ahmad");
@@ -73,6 +80,13 @@ const AddUser = (props) => {
 
     return (
         <>
+           
+            <LoadingBar
+                color='#f11946'
+                progress={progress}
+                onLoaderFinished={() => setProgress(0)}
+            />
+            <Navbar />
             <div className="container">
                 <div className="row">
                     <div style={{ color: 'red', backgroundColor: 'grey' }} className="card my-3">
