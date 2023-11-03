@@ -5,12 +5,13 @@ import ViewUser from './components/ViewUser';
 import AddUser from './components/AddUser';
 import User from './components/User';
 import Welcome from './components/Welcome';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <>
 
-
+      <Navbar/>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Welcome />} /> 
