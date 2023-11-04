@@ -15,6 +15,15 @@ const notesController = {
          console.log(error.message)
          return res.status(500).json({status:false, msg:"Sorry Something Went Wrong", data:null})
       }
+   },
+   getAllNotes: async (req,res)=>{
+      try {
+         const allNotes = await notes.find();
+         return res.json({status:true, msg:"All Notes", data:allNotes})
+      } catch (error) {
+         console.log(error.message)
+         return res.status(500).json({status:false, msg:"Sorry Something Went Wrong", data:null})
+      }
    }
 
 }

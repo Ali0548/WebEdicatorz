@@ -6,6 +6,7 @@ import Login from './components/auth/Login';
 import AddUser from './components/AddUser';
 import ViewUser from './components/ViewUser';
 import AddNotes from './components/AddNotes';
+import ViewNotes from './components/ViewNotes';
 const Logout = ()=>{
   localStorage.clear();
   window.location.href = "/"
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={ <Login/>} /> 
             <Route path="/addUser" element={<AddUser />} /> 
             <Route path="/addNote" element={<AddNotes />} /> 
+            <Route path="/viewNotes" element={<ViewNotes />} /> 
             <Route path="/viewUser" element={<ViewUser />} /> 
             <Route path="/logout" element={<Logout />} /> 
           </Routes>
